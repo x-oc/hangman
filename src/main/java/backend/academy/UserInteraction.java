@@ -1,12 +1,15 @@
 package backend.academy;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Set;
 
 public class UserInteraction {
 
-    private final Scanner SCANNER = new Scanner(System.in);
+    @SuppressWarnings("MemberName")
+    private final Scanner SCANNER = new Scanner(System.in, StandardCharsets.UTF_8);
 
+    @SuppressWarnings("RegexpSinglelineJava")
     public String requestNextChar() {
         System.out.print("Введите следующую букву: ");
         String input = SCANNER.nextLine();
@@ -18,57 +21,73 @@ public class UserInteraction {
         return input.toLowerCase();
     }
 
+    @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
     public void showHangman(Integer misses) {
         StringBuilder hangman = new StringBuilder();
         hangman.append("______\n")
             .append("|    |\n");
         if (misses == 0) {
-             hangman.append("|\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |
+                 |
+                 |
+                 |
+                 |
+                 """);
         } else if (misses == 1) {
-             hangman.append("|    o\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |    o
+                 |
+                 |
+                 |
+                 |
+                 """);
         } else if (misses == 2) {
-             hangman.append("|    o\n")
-                    .append("|    |\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |    o
+                 |    |
+                 |
+                 |
+                 |
+                 """);
         } else if (misses == 3) {
-             hangman.append("|    o\n")
-                    .append("|   /|\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |    o
+                 |   /|
+                 |
+                 |
+                 |
+                 """);
         } else if (misses == 4) {
-             hangman.append("|    o\n")
-                    .append("|   /|\\\n")
-                    .append("|\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |    o
+                 |   /|\\
+                 |
+                 |
+                 |
+                 """);
         } else if (misses == 5) {
-             hangman.append("|    o\n")
-                    .append("|   /|\\\n")
-                    .append("|     \\\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |    o
+                 |   /|\\
+                 |     \\
+                 |
+                 |
+                 """);
         } else {
-             hangman.append("|    o\n")
-                    .append("|   /|\\\n")
-                    .append("|   / \\\n")
-                    .append("|\n")
-                    .append("|\n");
+             hangman.append("""
+                 |    o
+                 |   /|\\
+                 |   / \\
+                 |
+                 |
+                 """);
         }
 
         System.out.print(hangman);
     }
 
+    @SuppressWarnings("RegexpSinglelineJava")
     public void showWord(String word, Set<Character> guessed) {
         StringBuilder toShow = new StringBuilder();
         if (word == null) {
@@ -77,7 +96,7 @@ public class UserInteraction {
         for (Character c : word.toCharArray()) {
             if (guessed.contains(c)) {
                 toShow.append(c);
-                toShow.append(" ");
+                toShow.append(' ');
             } else {
                 toShow.append("_ ");
             }
@@ -85,6 +104,7 @@ public class UserInteraction {
         System.out.println(toShow);
     }
 
+    @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
     public void indent() {
         System.out.print("\n".repeat(10));
     }

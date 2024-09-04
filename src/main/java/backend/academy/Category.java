@@ -1,7 +1,7 @@
 package backend.academy;
 
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 
 public enum Category {
     PROGRAMMING("programming"),
@@ -16,7 +16,7 @@ public enum Category {
 
     private static final List<Category> VALUES = List.of(values());
     private static final int SIZE = VALUES.size();
-    private static final Random RANDOM = new Random();
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     public static Category randomCategory()  {
         return VALUES.get(RANDOM.nextInt(SIZE));
