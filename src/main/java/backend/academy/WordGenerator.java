@@ -11,6 +11,8 @@ import org.apache.commons.lang3.tuple.Pair;
 @Builder
 public class WordGenerator {
 
+    private Pair<String, String> lastChosen;
+
     @SuppressWarnings("MemberName")
     private final Map<String, Map<String, List<Pair<String, String>>>> DICTIONARY = Map.of(
         Category.PROGRAMMING.name, Map.of(
@@ -62,6 +64,14 @@ public class WordGenerator {
             difficulty = Difficulty.randomDifficulty();
         }
         List<Pair<String, String>> words = DICTIONARY.get(category.name).get(difficulty.name);
-        return words.get(RANDOM.nextInt(words.size())).getLeft();
+        lastChosen = words.get(RANDOM.nextInt(words.size()));
+        return lastChosen.getLeft();
+    }
+
+    public String getDescription() {
+        if (lastChosen == null) {
+            return null;
+        }
+        return lastChosen.getRight();
     }
 }

@@ -48,4 +48,18 @@ public class WordGeneratorTest {
             .build();
         MatcherAssert.assertThat(words, Matchers.hasItem(generator.generate()));
     }
+
+    @Test
+    void getDescription() {
+        List<String> words = Arrays.asList(
+            "An electronic device that processes information.",
+            "A programming language used to create applications.",
+            "A version control system used to manage code.");
+        WordGenerator generator = WordGenerator.builder()
+            .category(Category.PROGRAMMING)
+            .difficulty(Difficulty.EASY)
+            .build();
+        generator.generate();
+        MatcherAssert.assertThat(words, Matchers.hasItem(generator.getDescription()));
+    }
 }

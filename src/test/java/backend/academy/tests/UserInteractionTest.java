@@ -30,7 +30,7 @@ public class UserInteractionTest {
     }
 
     @Test
-    public void fullHangmanOutput() {
+    void fullHangmanOutput() {
         String hangman =
             """
                 ______
