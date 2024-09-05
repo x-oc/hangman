@@ -11,8 +11,6 @@ import org.apache.commons.lang3.tuple.Pair;
 @Builder
 public class WordGenerator {
 
-    private Pair<String, String> lastChosen;
-
     @SuppressWarnings("MemberName")
     private final Map<String, Map<String, List<Pair<String, String>>>> DICTIONARY = Map.of(
         Category.PROGRAMMING.name, Map.of(
@@ -53,6 +51,7 @@ public class WordGenerator {
 
     private Category category;
     private Difficulty difficulty;
+    private Pair<String, String> lastChosen;
     @SuppressWarnings("MemberName")
     private final SecureRandom RANDOM = new SecureRandom();
 

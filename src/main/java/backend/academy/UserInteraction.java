@@ -21,6 +21,15 @@ public class UserInteraction {
         return input.toLowerCase();
     }
 
+    public void println(String message) {
+        System.out.println(message);
+    }
+
+    public String requestParameter(String message) {
+        System.out.println(message);
+        return SCANNER.nextLine();
+    }
+
     @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
     public void showHangman(Integer misses) {
         StringBuilder hangman = new StringBuilder();

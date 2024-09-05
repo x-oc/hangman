@@ -1,5 +1,6 @@
 package backend.academy;
 
+import lombok.Getter;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public enum Difficulty {
         this.name = name;
     }
 
+    @Getter
     private static final List<Difficulty> VALUES = List.of(values());
     private static final int SIZE = VALUES.size();
     private static final SecureRandom RANDOM = new SecureRandom();

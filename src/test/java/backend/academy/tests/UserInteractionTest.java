@@ -73,8 +73,22 @@ public class UserInteractionTest {
     @Test
     void nextCharInput() {
         System.setIn(new ByteArrayInputStream("ab\na\n".getBytes()));
+        // todo
         //interaction.requestNextChar();
         //Assertions.assertEquals("Введите следующую букву: Введите следующую букву: ", outContent.toString());
+    }
+
+    @Test
+    void requestParameter() {
+        System.setIn(new ByteArrayInputStream("EASY".getBytes()));
+        //String input = interaction.requestParameter("Введите сложность (EASY, NORMAL, HARD): ");
+        //Assertions.assertEquals("EASY", input);
+    }
+
+    @Test
+    void println() {
+        //interaction.println("привет!");
+        //Assertions.assertEquals("привет!", outContent.toString());
     }
 
     @AfterEach

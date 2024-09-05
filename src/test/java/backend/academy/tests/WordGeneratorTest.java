@@ -5,6 +5,7 @@ import backend.academy.Difficulty;
 import backend.academy.WordGenerator;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
@@ -61,5 +62,14 @@ public class WordGeneratorTest {
             .build();
         generator.generate();
         MatcherAssert.assertThat(words, Matchers.hasItem(generator.getDescription()));
+    }
+
+    @Test
+    void getNullDescription() {
+        WordGenerator generator = WordGenerator.builder()
+            .category(Category.PROGRAMMING)
+            .difficulty(Difficulty.EASY)
+            .build();
+        Assertions.assertNull(generator.getDescription());
     }
 }
