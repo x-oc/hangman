@@ -1,8 +1,8 @@
 package backend.academy;
 
-import lombok.Getter;
 import java.security.SecureRandom;
 import java.util.List;
+import lombok.Getter;
 
 public enum Difficulty {
     EASY("easy"),

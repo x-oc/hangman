@@ -1,5 +1,6 @@
 package backend.academy;
 
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Set;
@@ -8,34 +9,47 @@ public class UserInteraction {
 
     @SuppressWarnings("MemberName")
     private final Scanner SCANNER = new Scanner(System.in, StandardCharsets.UTF_8);
+    private final PrintStream printStream = new PrintStream(System.out, false, StandardCharsets.UTF_8);
+    private final Integer maxMisses;
 
-    @SuppressWarnings("RegexpSinglelineJava")
-    public String requestNextChar() {
-        System.out.print("Введите следующую букву: ");
+    public UserInteraction(Integer maxMisses) {
+        this.maxMisses = maxMisses;
+    }
+
+    public Character requestNextChar() {
+        printStream.print("Введите следующую букву: ");
         String input = SCANNER.nextLine();
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
         while (input.length() != 1 || !alphabet.contains(input.toLowerCase())) {
-            System.out.print("Вам нужно ввести одну единственную букву латинского алфавита: ");
+            printStream.print("Вам нужно ввести одну единственную букву латинского алфавита: ");
             input = SCANNER.nextLine();
         }
-        return input.toLowerCase();
+        return input.toLowerCase().charAt(0);
     }
 
     public void println(String message) {
-        System.out.println(message);
+        printStream.println(message);
     }
 
     public String requestParameter(String message) {
-        System.out.println(message);
+        printStream.println(message);
         return SCANNER.nextLine();
     }
 
-    @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
+    @SuppressWarnings("MagicNumber")
     public void showHangman(Integer misses) {
         StringBuilder hangman = new StringBuilder();
         hangman.append("______\n")
             .append("|    |\n");
-        if (misses == 0) {
+         if (misses > maxMisses) {
+            hangman.append("""
+                 |    o
+                 |   /|\\
+                 |   / \\
+                 |
+                 |
+                 """);
+        } else if (misses == 0) {
              hangman.append("""
                  |
                  |
@@ -83,20 +97,11 @@ public class UserInteraction {
                  |
                  |
                  """);
-        } else {
-             hangman.append("""
-                 |    o
-                 |   /|\\
-                 |   / \\
-                 |
-                 |
-                 """);
         }
 
-        System.out.print(hangman);
+        printStream.print(hangman);
     }
 
-    @SuppressWarnings("RegexpSinglelineJava")
     public void showWord(String word, Set<Character> guessed) {
         StringBuilder toShow = new StringBuilder();
         if (word == null) {
@@ -110,11 +115,11 @@ public class UserInteraction {
                 toShow.append("_ ");
             }
         }
-        System.out.println(toShow);
+        printStream.println(toShow);
     }
 
-    @SuppressWarnings({"RegexpSinglelineJava", "MagicNumber"})
+    @SuppressWarnings("MagicNumber")
     public void indent() {
-        System.out.print("\n".repeat(10));
+        printStream.print("\n".repeat(10));
     }
 }

@@ -7,16 +7,20 @@ public class GameManager {
 
     private WordGenerator wordGenerator;
     private UserInteraction userInteraction;
+    private boolean isHintUsed;
     private final GameState gameState;
+    private final Integer maxMisses = 5;
 
     public GameManager() {
         gameState = new GameState();
-        userInteraction = new UserInteraction();
+        userInteraction = new UserInteraction(maxMisses);
+        isHintUsed = false;
     }
 
     public void start() {
 
         greet();
+
         Difficulty difficulty = askDifficulty();
         Category category = askCategory();
 
@@ -30,12 +34,55 @@ public class GameManager {
         gameState.word(wordGenerator.generate());
         gameState.description(wordGenerator.getDescription());
 
+        boolean isGameProcessing = true;
+        while (isGameProcessing) {
+            isGameProcessing = nextIteration();
+        }
+    }
+
+    private boolean nextIteration() {
+
+        userInteraction.showWord(gameState.word(), gameState.guessed());
+        userInteraction.showHangman(gameState.misses());
+
+        suggestHint();
+
+        Character userChar = userInteraction.requestNextChar();
+        gameState.newAttempt(userChar);
+
+        if (gameState.word().indexOf(userChar) == -1) {
+            gameState.incrementMisses();
+        }
+
+        if (gameState.misses() > maxMisses) {
+            userInteraction.showHangman(gameState.misses());
+            userInteraction.println("Вы проиграли! Правильное слово: " + gameState.word());
+            return false;
+        } else if (gameState.guessed().containsAll(gameState.word().chars().mapToObj(c -> (char) c).toList())) {
+            userInteraction.showWord(gameState.word(), gameState.guessed());
+            userInteraction.println("Вы выиграли!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void suggestHint() {
+
+        if (!isHintUsed) {
+            String userInput = userInteraction.requestParameter("Хотите использовать подсказку (y/n)?");
+            if (Objects.equals(userInput, "y")) {
+                userInteraction.println(gameState.description());
+                isHintUsed = true;
+            }
+        }
     }
 
     private void greet() {
         userInteraction.println("Привет! Это игра \"Виселица\", давайте приступим!");
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     private Difficulty askDifficulty() {
         List<String> difficulties = Difficulty.VALUES().stream().map(Enum::name).toList();
         String userInput = userInteraction.requestParameter("Укажите сложность ("
@@ -50,6 +97,7 @@ public class GameManager {
         return Difficulty.valueOf(userInput);
     }
 
+    @SuppressWarnings("MultipleStringLiterals")
     private Category askCategory() {
         List<String> categories = Category.VALUES().stream().map(Enum::name).toList();
         String userInput = userInteraction.requestParameter("Укажите категорию ("

@@ -22,11 +22,12 @@ public class UserInteractionTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final InputStream originalIn = System.in;
-    private final UserInteraction interaction = new UserInteraction();
+    private UserInteraction interaction;
 
     @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
+        interaction = new UserInteraction(5);
     }
 
     @Test
@@ -71,24 +72,26 @@ public class UserInteractionTest {
     }
 
     @Test
+    void println() {
+        interaction.println("привет!");
+        Assertions.assertEquals("привет!", outContent.toString().strip());
+    }
+
+    @Test
     void nextCharInput() {
         System.setIn(new ByteArrayInputStream("ab\na\n".getBytes()));
-        // todo
-        //interaction.requestNextChar();
-        //Assertions.assertEquals("Введите следующую букву: Введите следующую букву: ", outContent.toString());
+        interaction = new UserInteraction(5);
+        Character userInput = interaction.requestNextChar();
+        Assertions.assertEquals('a', userInput);
+        Assertions.assertEquals("Введите следующую букву: Вам нужно ввести одну единственную букву латинского алфавита: ", outContent.toString());
     }
 
     @Test
     void requestParameter() {
         System.setIn(new ByteArrayInputStream("EASY".getBytes()));
-        //String input = interaction.requestParameter("Введите сложность (EASY, NORMAL, HARD): ");
-        //Assertions.assertEquals("EASY", input);
-    }
-
-    @Test
-    void println() {
-        //interaction.println("привет!");
-        //Assertions.assertEquals("привет!", outContent.toString());
+        interaction = new UserInteraction(5);
+        String input = interaction.requestParameter("Введите сложность (EASY, NORMAL, HARD): ");
+        Assertions.assertEquals("EASY", input);
     }
 
     @AfterEach
