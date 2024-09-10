@@ -18,13 +18,13 @@ public class UserInteraction {
 
     public Character requestNextChar() {
         printStream.print("Введите следующую букву: ");
-        String input = SCANNER.nextLine();
+        String input = SCANNER.nextLine().toLowerCase();
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        while (input.length() != 1 || !alphabet.contains(input.toLowerCase())) {
+        while (input.length() != 1 || !alphabet.contains(input)) {
             printStream.print("Вам нужно ввести одну единственную букву латинского алфавита: ");
             input = SCANNER.nextLine();
         }
-        return input.toLowerCase().charAt(0);
+        return input.charAt(0);
     }
 
     public void println(String message) {

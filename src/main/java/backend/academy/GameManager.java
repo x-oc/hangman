@@ -42,8 +42,10 @@ public class GameManager {
 
     private boolean nextIteration() {
 
+        userInteraction.indent();
         userInteraction.showWord(gameState.word(), gameState.guessed());
         userInteraction.showHangman(gameState.misses());
+        userInteraction.println("Осталось попыток: " + (maxMisses + 1 - gameState.misses()));
 
         suggestHint();
 
@@ -79,7 +81,8 @@ public class GameManager {
     }
 
     private void greet() {
-        userInteraction.println("Привет! Это игра \"Виселица\", давайте приступим!");
+        userInteraction.println("Привет! Это игра \"Виселица\". Вам нужно угадать слово по буквам. Ошибиться можно "
+            + maxMisses +  " раз. Давайте приступим!");
     }
 
     @SuppressWarnings("MultipleStringLiterals")
