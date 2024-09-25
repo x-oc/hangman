@@ -2,8 +2,6 @@ package backend.academy;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,6 +12,7 @@ public class UserInteraction {
     private final Scanner SCANNER = new Scanner(System.in, StandardCharsets.UTF_8);
     private final PrintStream printStream = new PrintStream(System.out, false, StandardCharsets.UTF_8);
     private final Integer maxMisses;
+    private final static String NULL = "null";
 
     public UserInteraction(Integer maxMisses) {
         this.maxMisses = maxMisses;
@@ -131,27 +130,29 @@ public class UserInteraction {
             + maxMisses +  " раз. Давайте приступим!");
     }
 
-    @SuppressWarnings("MultipleStringLiterals")
     public Difficulty getDifficulty() {
+        String difficultyPrompt = "Укажите сложность (%s, null): ";
+        String difficultyPromptError = "Некорректная сложность (выберите среди %s, null): ";
         String difficulties = Difficulty.VALUES().stream().map(Enum::name).collect(Collectors.joining(", "));
-        String userInput = requestParameter("Укажите сложность (" + difficulties + ", null): ");
-        while (!difficulties.contains(userInput) && !userInput.equals("null")) {
-            userInput = requestParameter("Некорректная сложность (выберите среди " + difficulties + ", null): ");
+        String userInput = requestParameter(String.format(difficultyPrompt, difficulties));
+        while (!difficulties.contains(userInput) && !NULL.equals(userInput)) {
+            userInput = requestParameter(requestParameter(String.format(difficultyPromptError, difficulties)));
         }
-        if (userInput.equals("null")) {
+        if (NULL.equals(userInput)) {
             return null;
         }
         return Difficulty.valueOf(userInput);
     }
 
-    @SuppressWarnings("MultipleStringLiterals")
     public Category getCategory() {
+        String categoryPrompt = "Укажите категорию (%s, null): ";
+        String categoryPromptError = "Некорректная категория (выберите среди %s, null): ";
         String categories = Category.VALUES().stream().map(Enum::name).collect(Collectors.joining(", "));
-        String userInput = requestParameter("Укажите категорию (" + categories + ", null): ");
-        while (!categories.contains(userInput) && !userInput.equals("null")) {
-            userInput = requestParameter("Некорректная категория (выберите среди " + categories + ", null): ");
+        String userInput = requestParameter(String.format(categoryPrompt, categories));
+        while (!categories.contains(userInput) && !NULL.equals(userInput)) {
+            userInput = requestParameter(String.format(categoryPromptError, categories));
         }
-        if (userInput.equals("null")) {
+        if (NULL.equals(userInput)) {
             return null;
         }
         return Category.valueOf(userInput);
