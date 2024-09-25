@@ -1,6 +1,5 @@
 package backend.academy;
 
-import java.util.List;
 import java.util.Objects;
 
 public class GameManager {
@@ -15,10 +14,10 @@ public class GameManager {
 
     public void start() {
 
-        greet();
+        userInteraction.greet(MAX_MISSES);
 
-        Difficulty difficulty = getDifficulty();
-        Category category = getCategory();
+        Difficulty difficulty = userInteraction.getDifficulty();
+        Category category = userInteraction.getCategory();
 
         WordGenerator wordGenerator = WordGenerator.builder()
             .difficulty(difficulty)
@@ -76,40 +75,5 @@ public class GameManager {
                 gameState.isHintUsed(true);
             }
         }
-    }
-
-    private void greet() {
-        userInteraction.println("Привет! Это игра \"Виселица\". Вам нужно угадать слово по буквам. Ошибиться можно "
-            + MAX_MISSES +  " раз. Давайте приступим!");
-    }
-
-    @SuppressWarnings("MultipleStringLiterals")
-    private Difficulty getDifficulty() {
-        List<String> difficulties = Difficulty.VALUES().stream().map(Enum::name).toList();
-        String userInput = userInteraction.requestParameter("Укажите сложность ("
-            + String.join(", ", difficulties) + ", null): ");
-        while (!difficulties.contains(userInput) && !Objects.equals(userInput, "null")) {
-            userInput = userInteraction.requestParameter("Некорректная сложность (выберите среди "
-                + String.join(", ", difficulties) + ", null): ");
-        }
-        if (Objects.equals(userInput, "null")) {
-            return null;
-        }
-        return Difficulty.valueOf(userInput);
-    }
-
-    @SuppressWarnings("MultipleStringLiterals")
-    private Category getCategory() {
-        List<String> categories = Category.VALUES().stream().map(Enum::name).toList();
-        String userInput = userInteraction.requestParameter("Укажите категорию ("
-            + String.join(", ", categories) + ", null): ");
-        while (!categories.contains(userInput) && !Objects.equals(userInput, "null")) {
-            userInput = userInteraction.requestParameter("Некорректная категория (выберите среди "
-                + String.join(", ", categories) + ", null): ");
-        }
-        if (Objects.equals(userInput, "null")) {
-            return null;
-        }
-        return Category.valueOf(userInput);
     }
 }

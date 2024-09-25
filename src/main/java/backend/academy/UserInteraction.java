@@ -2,6 +2,8 @@ package backend.academy;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -121,5 +123,40 @@ public class UserInteraction {
     @SuppressWarnings("MagicNumber")
     public void indent() {
         printStream.print("\n".repeat(10));
+    }
+
+    public void greet(Integer maxMisses) {
+        println("Привет! Это игра \"Виселица\". Вам нужно угадать слово по буквам. Ошибиться можно "
+            + maxMisses +  " раз. Давайте приступим!");
+    }
+
+    @SuppressWarnings("MultipleStringLiterals")
+    public Difficulty getDifficulty() {
+        List<String> difficulties = Difficulty.VALUES().stream().map(Enum::name).toList();
+        String userInput = requestParameter("Укажите сложность ("
+            + String.join(", ", difficulties) + ", null): ");
+        while (!difficulties.contains(userInput) && !Objects.equals(userInput, "null")) {
+            userInput = requestParameter("Некорректная сложность (выберите среди "
+                + String.join(", ", difficulties) + ", null): ");
+        }
+        if (Objects.equals(userInput, "null")) {
+            return null;
+        }
+        return Difficulty.valueOf(userInput);
+    }
+
+    @SuppressWarnings("MultipleStringLiterals")
+    public Category getCategory() {
+        List<String> categories = Category.VALUES().stream().map(Enum::name).toList();
+        String userInput = requestParameter("Укажите категорию ("
+            + String.join(", ", categories) + ", null): ");
+        while (!categories.contains(userInput) && !Objects.equals(userInput, "null")) {
+            userInput = requestParameter("Некорректная категория (выберите среди "
+                + String.join(", ", categories) + ", null): ");
+        }
+        if (Objects.equals(userInput, "null")) {
+            return null;
+        }
+        return Category.valueOf(userInput);
     }
 }
