@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserInteraction {
 
@@ -132,14 +133,12 @@ public class UserInteraction {
 
     @SuppressWarnings("MultipleStringLiterals")
     public Difficulty getDifficulty() {
-        List<String> difficulties = Difficulty.VALUES().stream().map(Enum::name).toList();
-        String userInput = requestParameter("Укажите сложность ("
-            + String.join(", ", difficulties) + ", null): ");
-        while (!difficulties.contains(userInput) && !Objects.equals(userInput, "null")) {
-            userInput = requestParameter("Некорректная сложность (выберите среди "
-                + String.join(", ", difficulties) + ", null): ");
+        String difficulties = Difficulty.VALUES().stream().map(Enum::name).collect(Collectors.joining(", "));
+        String userInput = requestParameter("Укажите сложность (" + difficulties + ", null): ");
+        while (!difficulties.contains(userInput) && !userInput.equals("null")) {
+            userInput = requestParameter("Некорректная сложность (выберите среди " + difficulties + ", null): ");
         }
-        if (Objects.equals(userInput, "null")) {
+        if (userInput.equals("null")) {
             return null;
         }
         return Difficulty.valueOf(userInput);
@@ -147,14 +146,12 @@ public class UserInteraction {
 
     @SuppressWarnings("MultipleStringLiterals")
     public Category getCategory() {
-        List<String> categories = Category.VALUES().stream().map(Enum::name).toList();
-        String userInput = requestParameter("Укажите категорию ("
-            + String.join(", ", categories) + ", null): ");
-        while (!categories.contains(userInput) && !Objects.equals(userInput, "null")) {
-            userInput = requestParameter("Некорректная категория (выберите среди "
-                + String.join(", ", categories) + ", null): ");
+        String categories = Category.VALUES().stream().map(Enum::name).collect(Collectors.joining(", "));
+        String userInput = requestParameter("Укажите категорию (" + categories + ", null): ");
+        while (!categories.contains(userInput) && !userInput.equals("null")) {
+            userInput = requestParameter("Некорректная категория (выберите среди " + categories + ", null): ");
         }
-        if (Objects.equals(userInput, "null")) {
+        if (userInput.equals("null")) {
             return null;
         }
         return Category.valueOf(userInput);
