@@ -18,8 +18,8 @@ public class GameManager {
 
         greet();
 
-        Difficulty difficulty = askDifficulty();
-        Category category = askCategory();
+        Difficulty difficulty = getDifficulty();
+        Category category = getCategory();
 
         WordGenerator wordGenerator = WordGenerator.builder()
             .difficulty(difficulty)
@@ -83,7 +83,7 @@ public class GameManager {
     }
 
     @SuppressWarnings("MultipleStringLiterals")
-    private Difficulty askDifficulty() {
+    private Difficulty getDifficulty() {
         List<String> difficulties = Difficulty.VALUES().stream().map(Enum::name).toList();
         String userInput = userInteraction.requestParameter("Укажите сложность ("
             + String.join(", ", difficulties) + ", null): ");
@@ -98,7 +98,7 @@ public class GameManager {
     }
 
     @SuppressWarnings("MultipleStringLiterals")
-    private Category askCategory() {
+    private Category getCategory() {
         List<String> categories = Category.VALUES().stream().map(Enum::name).toList();
         String userInput = userInteraction.requestParameter("Укажите категорию ("
             + String.join(", ", categories) + ", null): ");
