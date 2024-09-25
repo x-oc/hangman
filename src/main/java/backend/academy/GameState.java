@@ -3,6 +3,7 @@ package backend.academy;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,12 @@ public class GameState {
     private boolean isHintUsed;
     private Set<Character> guessed;
 
-    public GameState() {
+    @Builder
+    public GameState(Difficulty difficulty, Category category, String word, String description) {
+        this.difficulty = difficulty;
+        this.category = category;
+        this.word = word;
+        this.description = description;
         misses = 0;
         guessed = new HashSet<>();
         isHintUsed = false;

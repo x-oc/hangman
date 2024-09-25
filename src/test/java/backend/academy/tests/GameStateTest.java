@@ -12,11 +12,12 @@ public class GameStateTest {
 
     @Test
     void commonGameStateUsage() {
-        GameState gameState = new GameState();
-        gameState.difficulty(Difficulty.EASY);
-        gameState.category(Category.PROGRAMMING);
-        gameState.word("git");
-        gameState.description("A version control system used to manage code.");
+        GameState gameState = GameState.builder()
+            .difficulty(Difficulty.EASY)
+            .category(Category.PROGRAMMING)
+            .word("git")
+            .description("A version control system used to manage code.")
+            .build();
 
         Assertions.assertEquals("git", gameState.word());
         Assertions.assertEquals("A version control system used to manage code.", gameState.description());

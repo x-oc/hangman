@@ -6,11 +6,10 @@ import java.util.Objects;
 public class GameManager {
 
     private final UserInteraction userInteraction;
-    private final GameState gameState;
+    private GameState gameState;
     private static final Integer MAX_MISSES = 5;
 
     public GameManager() {
-        gameState = new GameState();
         userInteraction = new UserInteraction(MAX_MISSES);
     }
 
@@ -26,10 +25,12 @@ public class GameManager {
             .category(category)
             .build();
 
-        gameState.difficulty(difficulty);
-        gameState.category(category);
-        gameState.word(wordGenerator.generate());
-        gameState.description(wordGenerator.getDescription());
+        gameState = GameState.builder()
+            .difficulty(difficulty)
+            .category(category)
+            .word(wordGenerator.generate())
+            .description(wordGenerator.getDescription())
+            .build();
 
         boolean isGameProcessing = true;
         while (isGameProcessing) {
