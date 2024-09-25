@@ -14,7 +14,7 @@ public class GameManager {
 
     public void start() {
 
-        userInteraction.greet(MAX_MISSES);
+        userInteraction.greet();
 
         Difficulty difficulty = userInteraction.getDifficulty();
         Category category = userInteraction.getCategory();

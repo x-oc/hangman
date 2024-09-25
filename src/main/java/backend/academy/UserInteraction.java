@@ -40,67 +40,7 @@ public class UserInteraction {
 
     @SuppressWarnings("MagicNumber")
     public void showHangman(Integer misses) {
-        StringBuilder hangman = new StringBuilder();
-        hangman.append("______\n")
-            .append("|    |\n");
-         if (misses > maxMisses) {
-            hangman.append("""
-                 |    o
-                 |   /|\\
-                 |   / \\
-                 |
-                 |
-                 """);
-        } else if (misses == 0) {
-             hangman.append("""
-                 |
-                 |
-                 |
-                 |
-                 |
-                 """);
-        } else if (misses == 1) {
-             hangman.append("""
-                 |    o
-                 |
-                 |
-                 |
-                 |
-                 """);
-        } else if (misses == 2) {
-             hangman.append("""
-                 |    o
-                 |    |
-                 |
-                 |
-                 |
-                 """);
-        } else if (misses == 3) {
-             hangman.append("""
-                 |    o
-                 |   /|
-                 |
-                 |
-                 |
-                 """);
-        } else if (misses == 4) {
-             hangman.append("""
-                 |    o
-                 |   /|\\
-                 |
-                 |
-                 |
-                 """);
-        } else if (misses == 5) {
-             hangman.append("""
-                 |    o
-                 |   /|\\
-                 |     \\
-                 |
-                 |
-                 """);
-        }
-
+        String hangman = HangmanState.getState(misses);
         printStream.print(hangman);
     }
 
@@ -125,7 +65,7 @@ public class UserInteraction {
         printStream.print("\n".repeat(10));
     }
 
-    public void greet(Integer maxMisses) {
+    public void greet() {
         println("Привет! Это игра \"Виселица\". Вам нужно угадать слово по буквам. Ошибиться можно "
             + maxMisses +  " раз. Давайте приступим!");
     }
