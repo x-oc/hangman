@@ -19,7 +19,6 @@ public enum Difficulty {
         this.name = name;
     }
 
-
     public static Difficulty randomDifficulty()  {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }

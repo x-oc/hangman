@@ -5,11 +5,10 @@ import java.util.Objects;
 
 public class GameManager {
 
-    private WordGenerator wordGenerator;
-    private UserInteraction userInteraction;
+    private final UserInteraction userInteraction;
     private boolean isHintUsed;
     private final GameState gameState;
-    private final Integer maxMisses = 5;
+    private static final Integer maxMisses = 5;
 
     public GameManager() {
         gameState = new GameState();
@@ -24,7 +23,7 @@ public class GameManager {
         Difficulty difficulty = askDifficulty();
         Category category = askCategory();
 
-        wordGenerator = WordGenerator.builder()
+        WordGenerator wordGenerator = WordGenerator.builder()
             .difficulty(difficulty)
             .category(category)
             .build();
