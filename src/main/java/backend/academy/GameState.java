@@ -16,11 +16,13 @@ public class GameState {
     private Integer misses;
     private String word;
     private String description;
+    private boolean isHintUsed;
     private Set<Character> guessed;
 
     public GameState() {
         misses = 0;
         guessed = new HashSet<>();
+        isHintUsed = false;
     }
 
     public void newAttempt(Character character) {

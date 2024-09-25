@@ -6,14 +6,12 @@ import java.util.Objects;
 public class GameManager {
 
     private final UserInteraction userInteraction;
-    private boolean isHintUsed;
     private final GameState gameState;
-    private static final Integer maxMisses = 5;
+    private static final Integer MAX_MISSES = 5;
 
     public GameManager() {
         gameState = new GameState();
-        userInteraction = new UserInteraction(maxMisses);
-        isHintUsed = false;
+        userInteraction = new UserInteraction(MAX_MISSES);
     }
 
     public void start() {
@@ -44,7 +42,7 @@ public class GameManager {
         userInteraction.indent();
         userInteraction.showWord(gameState.word(), gameState.guessed());
         userInteraction.showHangman(gameState.misses());
-        userInteraction.println("Осталось попыток: " + (maxMisses + 1 - gameState.misses()));
+        userInteraction.println("Осталось попыток: " + (MAX_MISSES + 1 - gameState.misses()));
 
         suggestHint();
 
@@ -55,7 +53,7 @@ public class GameManager {
             gameState.incrementMisses();
         }
 
-        if (gameState.misses() > maxMisses) {
+        if (gameState.misses() > MAX_MISSES) {
             userInteraction.showHangman(gameState.misses());
             userInteraction.println("Вы проиграли! Правильное слово: " + gameState.word());
             return false;
@@ -70,18 +68,18 @@ public class GameManager {
 
     private void suggestHint() {
 
-        if (!isHintUsed) {
+        if (!gameState.isHintUsed()) {
             String userInput = userInteraction.requestParameter("Хотите использовать подсказку (y/n)?");
             if (Objects.equals(userInput, "y")) {
                 userInteraction.println(gameState.description());
-                isHintUsed = true;
+                gameState.isHintUsed(true);
             }
         }
     }
 
     private void greet() {
         userInteraction.println("Привет! Это игра \"Виселица\". Вам нужно угадать слово по буквам. Ошибиться можно "
-            + maxMisses +  " раз. Давайте приступим!");
+            + MAX_MISSES +  " раз. Давайте приступим!");
     }
 
     @SuppressWarnings("MultipleStringLiterals")
